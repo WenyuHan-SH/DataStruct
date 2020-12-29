@@ -14,4 +14,29 @@
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
   </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Data_Struct_List_Base.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="Data_Struct_Link_List.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="Data_Struct_SQ_List.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="Data_Struct_Static_List.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="Data_Struct_Circular_List.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="Data_Struct_Dual_List.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="Data_Struct_List_Test.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+  </ItemGroup>
 </Project>

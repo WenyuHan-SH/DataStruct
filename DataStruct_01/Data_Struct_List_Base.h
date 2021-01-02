@@ -1,44 +1,18 @@
-#ifndef Data_STRUCT_LIST_BASE_H_
-#define Data_STRUCT_LIST_BASE_H_
-#include <iostream>
+#ifndef DATA_STRUCT_LIST_BASE_H
+#define DATA_STRUCT_LIST_BASE_H
+#include "Data_Struct_List_Define.h"
 
 namespace
 {
-	#define MAX_SIZE 20
-
-	#define OK 1
-	#define ERROR 0
-	#define TRUE 1
-	#define FALSE 0
-	typedef int Status;
-	typedef int ElemType;
-
-	typedef struct Node
+	void Print(const ElemType eData)
 	{
-		ElemType m_idata;
-		Node* pNext;
-	} Node, * ListNode;
+		std::cout << eData << " ";
+	}
 
-	typedef struct
+	bool Compare(const ElemType eData0, const ElemType eData1)
 	{
-		ElemType m_idata[MAX_SIZE];
-		int m_iLength;
-	} SQListNode;
-
-	#define MAXSIZE 1000
-	#define STATIC_LIST_LENGTH 10
-	typedef struct
-	{
-		ElemType data;
-		int cur;
-	}Component, StatciLinkList[MAXSIZE];
-
-	typedef struct DualNode
-	{
-		char data;
-		struct DualNode* prior;
-		struct DualNode* next;
-	}DualNode, * DuLinkList;
+		return abs(eData0 - eData1) < ACCURACY_ERROR;
+	}
 }
 
 class List
@@ -46,15 +20,21 @@ class List
 public:
 	List() {}
 	virtual ~List() {}
-	virtual bool ListEmpty() const = 0;
-	virtual void ClearList() = 0;
-	virtual Status GetElem(const int iIndex, int& iElement) const = 0;
-	virtual int LocateElem(const int iElement) const = 0;
-	virtual Status ListInsert(const int iIndex, const int iElement) = 0;
-	virtual Status ListDelete(const int iIndex, int& iElement) = 0;
+	virtual Status InitList() = 0;
+	virtual Status DestroyList() = 0;
+	virtual Status ClearList() = 0;
 	virtual int ListLength()  const = 0;
-	virtual void PrintList()  const = 0;
-	virtual void UnionList(List* const pList);
+	virtual Status GetElem(const int iIndex, ElemType& eData) const = 0;
+	virtual int LocateElem(const ElemType& eData, bool(*Compare)(ElemType, ElemType)) const = 0;
+	virtual Status ListInsert(const int iIndex, const ElemType& eData) = 0;
+	virtual Status ListDelete(const int iIndex, ElemType& eData) = 0;
+public:
+	Status PriorElem(const ElemType& eDataCur, ElemType& eDataPre) const;
+	Status NextElem(const ElemType& eDataCur, ElemType& eDataNext) const;
+	void ListTraverse(void(*Print)(const ElemType)) const;
+	void ListTraverseBack(void(*Print)(const ElemType)) const;
+	bool ListEmpty() const;
+	void UnionList(List* const pList);
 };
 
 void List::UnionList(List* const pList)
@@ -64,11 +44,62 @@ void List::UnionList(List* const pList)
 		int iTemp;
 		if (pList->GetElem(index, iTemp))
 		{
-			if (!LocateElem(iTemp))
+			if (!LocateElem(iTemp, Compare))
 			{
 				ListInsert(ListLength(), iTemp);
 			}
 		}
 	}
 }
-#endif // !Data_STRUCT_LIST_BASE_H_
+
+Status List::PriorElem(const ElemType& eDataCur, ElemType& eDataPre) const
+{
+	int iLocate = LocateElem(eDataCur, Compare);
+	if (iLocate - 1 < 1 || iLocate - 1 >= ListLength())
+	{
+		LogDevError("Locate out of length");
+		return ERROR;
+	}
+	GetElem(iLocate - 1, eDataPre);
+	return OK;
+}
+
+Status List::NextElem(const ElemType& eDataCur, ElemType& eDataNext) const
+{
+	int iLocate = LocateElem(eDataCur, Compare);
+	if (iLocate + 1 <= 1 || iLocate + 1 > ListLength())
+	{
+		LogDevError("Locate out of length");
+		return ERROR;
+	}
+	return GetElem(iLocate + 1, eDataNext);
+}
+
+bool List::ListEmpty() const
+{
+	return 0 == ListLength();
+}
+
+void List::ListTraverse(void(*Print)(const ElemType)) const
+{
+	for (int iIndex = 1; iIndex <= ListLength(); ++iIndex)
+	{
+		ElemType eDataCur;
+		GetElem(iIndex, eDataCur);
+		Print(eDataCur);
+	}
+	std::cout << std::endl;
+}
+
+void List::ListTraverseBack(void(*Print)(const ElemType)) const
+{
+	for (int iIndex = ListLength(); iIndex > 0; --iIndex)
+	{
+		ElemType eDataCur;
+		GetElem(iIndex, eDataCur);
+		Print(eDataCur);
+	}
+	std::cout << std::endl;
+}
+
+#endif // !DATA_STRUCT_LIST_BASE_H

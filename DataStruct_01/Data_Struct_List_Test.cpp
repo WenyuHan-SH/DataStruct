@@ -1,180 +1,65 @@
-#include "Data_Struct_SQ_List.h"
-#include "Data_Struct_Link_List.h"
-#include "Data_Struct_Static_List.h"
-#include "Data_Struct_Circular_List.h"
-#include "Data_Struct_Dual_List.h"
-#include<iostream>
+#include "Data_Struct_List_SqList.h"
+#include "Data_Struct_List_SnlList.h"
+#include "Data_Struct_List_StaList.h"
+#include "Data_Struct_List_CirList.h"
+#include "Data_Struct_List_DulList.h"
+
 namespace
 {
-	const int LIST_LENGTH = 10;
-	const int KILL_NUMBER = 1;
-	const int ALPH_NUMBER = 1;
-	void TestSQList()
+	void TestList(std::shared_ptr<List> spList)
 	{
-		SQListNode sqListNode;
-		sqListNode.m_iLength = LIST_LENGTH;
-		for (size_t i = 0; i < LIST_LENGTH; ++i)
+		std::cout << "********************************************" << std::endl;
+		spList->InitList();
+		for (int iInserIndex = 0; iInserIndex < INSERT_MIN_NUMBER; ++iInserIndex)
 		{
-			sqListNode.m_idata[i] = i + 1;
+			spList->ListInsert(iInserIndex + 1, iInserIndex + 5);
 		}
+		std::cout << "Print TraverseBack: ";
+		spList->ListTraverseBack(Print);
+		std::cout << "Print Traverse:     ";
+		spList->ListTraverse(Print);
 
-		SQList sqList(sqListNode);
+		ElemType eDeleteElem;
+		spList->ListDelete(DELETE_INDEX, eDeleteElem);
+		std::cout << "DeleteIndex= " << DELETE_INDEX << " DeleteElem= " << eDeleteElem << std::endl;
+		spList->ListTraverse(Print);
 
-		int iEleIndex(0), iDeleEle(0), iNumEle;
-
-		iEleIndex = sqList.LocateElem(3);
-		std::cout << iEleIndex << std::endl;
-
-		sqList.ListInsert(3, 11);
-
-		sqList.GetElem(2, iNumEle);
-		std::cout << iNumEle << std::endl;
-
-		sqList.ListDelete(2, iDeleEle);
-		std::cout << iDeleEle << std::endl;
-
-		SQListNode sqUnionListNode;
-		sqUnionListNode.m_iLength = 1;
-		sqUnionListNode.m_idata[0] = 20;
-		SQList sqUniotList(sqUnionListNode);
-
-		sqList.UnionList(&sqUniotList);
-
-		sqList.PrintList();
-	}
-
-	ListNode CreateLinkListHead()
-	{
-		ListNode listHeadNode = (ListNode)malloc(sizeof(Node));
-		listHeadNode->pNext = nullptr;
-		for (size_t i = 0; i < LIST_LENGTH; ++i)
+		spList->ClearList();
+		for (int iInserIndex = 0; iInserIndex < INSERT_MAX_NUMER; ++iInserIndex)
 		{
-			ListNode listNode = (ListNode)malloc(sizeof(Node));
-			listNode->m_idata = i + 1;
-			listNode->pNext = listHeadNode->pNext;
-			listHeadNode->pNext = listNode;
+			spList->ListInsert(iInserIndex + 1, iInserIndex);
 		}
-		return listHeadNode;
-	}
+		std::cout << "Print TraverseBack: ";
+		spList->ListTraverseBack(Print);
+		std::cout << "Print Traverse:     ";
+		spList->ListTraverse(Print);
 
-	ListNode CreateLinkListTail()
-	{
-		ListNode listHeadNode = (ListNode)malloc(sizeof(Node));
-		listHeadNode->pNext = nullptr;
-		ListNode listTempNode(listHeadNode);
-		for (size_t i = 0; i < LIST_LENGTH; ++i)
-		{
-			ListNode listNode = (ListNode)malloc(sizeof(Node));
-			listNode->m_idata = i + 10;
-			listNode->pNext = nullptr;
-			listTempNode->pNext = listNode;
-			listTempNode = listNode;
-		}
-		return listHeadNode;
-	}
+		ElemType eGetElem;
+		spList->GetElem(GET_INDEX, eGetElem);
+		int iLocate = spList->LocateElem(eGetElem, Compare);
+		std::cout << "DeleteIndex= " << iLocate << " LocateElem= " << eGetElem << std::endl;
 
-	void TestLinkList()
-	{
-		LinkList linkListHead = CreateLinkListHead();
+		ElemType eGetPriElem;
+		spList->PriorElem(eGetElem, eGetPriElem);
+		std::cout << "Elem= " << eGetElem << " PriElem= " << eGetPriElem << std::endl;
 
-		//LinkList linkListTail = CreateLinkListTail();
+		ElemType eGetNextElem;
+		spList->NextElem(eGetElem, eGetNextElem);
+		std::cout << "Elem= " << eGetElem << " NextElem= " << eGetNextElem << std::endl;
 
-		//int iEleIndex(0), iDeleEle(0);
+		spList->DestroyList();
 
-		//iEleIndex = linkListHead.LocateElem(3);
-		//std::cout << iEleIndex << std::endl;
-
-		
-		//linkListHead.ListInsert(1, 22);
-		linkListHead.PrintList();
-		linkListHead.ClearList();
-
-		//linkListHead.GetElem(2, iNumEle);
-		//std::cout << iNumEle << std::endl;
-
-		//linkListHead.ListDelete(2, iDeleEle);
-		//std::cout << iDeleEle << std::endl;
-		//std::cout << linkListHead.ListLength() << std::endl;
-		//std::cout << linkListTail.ListLength() << std::endl;
-
-		//linkListHead.PrintList();
-		//linkListHead.UnionList(&linkListTail);
-
-		//linkListHead.PrintList();
-		//linkListTail.PrintList();
-	}
-
-	void TestStaticList()
-	{
-
-		StaticList staticList0;
-		staticList0.Initial();
-
-		StaticList staticList1;
-		staticList1.Initial();
-		staticList0.ListInsert(6, 99);
-
-		int iEleIndex(0), iDeleEle(0), iNumEle;
-
-		iEleIndex = staticList0.LocateElem(12);
-		std::cout << iEleIndex << std::endl;
-
-		staticList0.ListInsert(3, 5);
-
-		staticList0.GetElem(2, iNumEle);
-		std::cout << iNumEle << std::endl;
-
-		staticList0.ListDelete(2, iDeleEle);
-		std::cout << iDeleEle << std::endl;
-
-		staticList0.UnionList(&staticList1);
-
-		staticList0.PrintList();
-		staticList1.PrintList();
-	}
-
-	ListNode CreateCircularList()
-	{
-		ListNode listHeadNode = (ListNode)malloc(sizeof(Node));
-		ListNode listTempNode(listHeadNode);
-		for (size_t i = 0; i < KILL_NUMBER; ++i)
-		{
-			ListNode listNode = (ListNode)malloc(sizeof(Node));
-			listNode->m_idata = i+1;
-			listTempNode->pNext = listNode;
-			listTempNode = listNode;
-		}
-		listTempNode->pNext = listHeadNode->pNext;
-		free(listHeadNode);
-		return listTempNode->pNext;
-	}
-
-	void TestCircularList()
-	{
-		CircularList circularList = CreateCircularList();
-		//circularList.ListKillIndex(3);
-		circularList.PrintList();
-		circularList.ClearList();
-		std::cout << std::endl;
-	}
-
-	void TestDualList()
-	{
-		DualList dualList;
-		dualList.InitAlphabet(ALPH_NUMBER);
-		dualList.PrintList();
-		std::cout << dualList.ListLength() << std::endl;
-		dualList.ClearList();
-		//dualList.PrintList();
+		std::cout << "********************************************" << std::endl;
 	}
 }
 
 int main()
 {
-	//TestSQList();
-	//TestLinkList();
-	//TestStaticList();
-	TestCircularList();
-	//TestDualList();
+	auto spList = std::make_shared<CircularList>();
+	//auto spList = std::make_shared<DualList>();
+	//auto spList = std::make_shared<SnlList>();
+	//auto spList = std::make_shared<SqList>();
+	//auto spList = std::make_shared<StaticList>();
+	TestList(spList);
 	return EXIT_SUCCESS;
 }

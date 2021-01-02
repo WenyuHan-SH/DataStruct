@@ -139,12 +139,13 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="Data_Struct_Circular_List.h" />
-    <ClInclude Include="Data_Struct_Dual_List.h" />
-    <ClInclude Include="Data_Struct_Link_List.h" />
-    <ClInclude Include="Data_Struct_SQ_List.h" />
+    <ClInclude Include="Data_Struct_List_CirList.h" />
+    <ClInclude Include="Data_Struct_List_DulList.h" />
+    <ClInclude Include="Data_Struct_List_SnlList.h" />
+    <ClInclude Include="Data_Struct_List_Define.h" />
+    <ClInclude Include="Data_Struct_List_SqList.h" />
     <ClInclude Include="Data_Struct_List_Base.h" />
-    <ClInclude Include="Data_Struct_Static_List.h" />
+    <ClInclude Include="Data_Struct_List_StaList.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Data_Struct_List_Test.cpp" />

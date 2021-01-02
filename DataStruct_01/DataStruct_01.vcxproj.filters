@@ -13,30 +13,39 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="头文件\Define">
+      <UniqueIdentifier>{bcddcf6a-f0db-4cd7-8138-f6586fb22be3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="源文件\Test">
+      <UniqueIdentifier>{a2b17576-177a-4133-9aff-b5185f86434d}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Data_Struct_List_SqList.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="Data_Struct_List_StaList.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="Data_Struct_List_SnlList.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="Data_Struct_List_DulList.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="Data_Struct_List_CirList.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="Data_Struct_List_Define.h">
+      <Filter>头文件\Define</Filter>
+    </ClInclude>
     <ClInclude Include="Data_Struct_List_Base.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
-    <ClInclude Include="Data_Struct_Link_List.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
-    <ClInclude Include="Data_Struct_SQ_List.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
-    <ClInclude Include="Data_Struct_Static_List.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
-    <ClInclude Include="Data_Struct_Circular_List.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
-    <ClInclude Include="Data_Struct_Dual_List.h">
-      <Filter>头文件</Filter>
+      <Filter>头文件\Define</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Data_Struct_List_Test.cpp">
-      <Filter>源文件</Filter>
+      <Filter>源文件\Test</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
